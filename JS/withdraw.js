@@ -8,11 +8,31 @@ document.getElementById('btn-withdraw').addEventListener('click', function(){
     const newWithdrawAmountString = withdrawField.value;
     const newWithdrawAmount = parseFloat(newWithdrawAmountString);
 
+    // Step-7: clear the input field
+    
+    withdrawField.value = '';
+
+    if(isNaN(newWithdrawAmount)){
+        alert('Please enter a valid amount!');
+        return;
+    }
+
     // Step-3: get previous withdraw total
 
     const withdrawTotalElement = document.getElementById('withdraw-total');
     const previousWithdrawTotalString = withdrawTotalElement.innerText;
     const previousWithdrawTotal = parseFloat(previousWithdrawTotalString);
+
+    // Step-5: get the previous balance total
+
+    const balanceTotalElement = document.getElementById('balance-total');
+    const previousBalanceAmountString = balanceTotalElement.innerText;
+    const previousBalanceAmount = parseFloat(previousBalanceAmountString);
+    
+    if(newWithdrawAmount > previousBalanceAmount){
+        alert('Insufficient Balance!');
+        return;
+    }
 
     // Step-4: calculate total withdraw amount
 
@@ -22,12 +42,6 @@ document.getElementById('btn-withdraw').addEventListener('click', function(){
 
     withdrawTotalElement.innerText = currentWithdrawTotal;
 
-    // Step-5: get the previous balance total
-
-    const balanceTotalElement = document.getElementById('balance-total');
-    const previousBalanceAmountString = balanceTotalElement.innerText;
-    const previousBalanceAmount = parseFloat(previousBalanceAmountString);
-
     // Step-6: calculate new balance total
 
     const newBalanceTotal = previousBalanceAmount - newWithdrawAmount;
@@ -35,10 +49,4 @@ document.getElementById('btn-withdraw').addEventListener('click', function(){
     // * set the new balance total
 
     balanceTotalElement.innerText = newBalanceTotal;
-
-    // Step-7: clear the input field
-    
-    withdrawField.value = '';
-
-    
 })
